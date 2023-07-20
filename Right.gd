@@ -1,7 +1,7 @@
 extends Sprite2D
 
 
-var speed = 300
+var speed = 450
 var velocity = Vector2(300, 200)
 
 # Called when the node enters the scene tree for the first time.
