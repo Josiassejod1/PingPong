@@ -1,7 +1,8 @@
 extends Sprite2D
 
 
-var speed = 3000
+var speed = 300
+var velocity = Vector2(300, 200)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,3 +15,4 @@ func _process(delta):
 		position.y -= speed * delta
 	if Input.is_action_pressed("move_down"):
 		position.y += speed * delta
+		

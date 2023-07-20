@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://b7llf5t07fghm"]
+[gd_scene load_steps=9 format=3 uid="uid://b7llf5t07fghm"]
 
 [ext_resource type="Texture2D" uid="uid://baclhmljjxmn" path="res://arts/Ball.png" id="1_lads7"]
 [ext_resource type="Texture2D" uid="uid://byobiy84ts4f5" path="res://arts/Player.png" id="2_7waxa"]
+[ext_resource type="Script" path="res://Ball.gd" id="2_kuac1"]
 [ext_resource type="Script" path="res://Right.gd" id="3_fa2pv"]
 [ext_resource type="Texture2D" uid="uid://db7k1lalfpoou" path="res://arts/Computer.png" id="4_agwhw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hexjg"]
-radius = 18.3374
+radius = 11.6318
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3tnhj"]
 size = Vector2(20, 125)
@@ -25,30 +26,42 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.00784314, 0.00784314, 0.00784314, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(570.375, 330.152)
-scale = Vector2(2.24166, 2.2758)
-texture = ExtResource("1_lads7")
+[node name="Ball" type="RigidBody2D" parent="."]
+gravity_scale = 2.66454e-15
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D"]
-position = Vector2(-0.167313, 1.25131)
+[node name="Ball" type="Sprite2D" parent="Ball"]
+position = Vector2(555.375, 314.924)
+scale = Vector2(1.24166, 1.26057)
+texture = ExtResource("1_lads7")
+script = ExtResource("2_kuac1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+position = Vector2(557, 316)
+scale = Vector2(2.24166, 2.2758)
 shape = SubResource("CircleShape2D_hexjg")
 
-[node name="Right" type="Sprite2D" parent="."]
+[node name="Right" type="RigidBody2D" parent="."]
+gravity_scale = 2.66454e-15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
+position = Vector2(995, 329)
+shape = SubResource("RectangleShape2D_3tnhj")
+
+[node name="Right" type="Sprite2D" parent="Right"]
 position = Vector2(995, 330)
 texture = ExtResource("2_7waxa")
 script = ExtResource("3_fa2pv")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
-position = Vector2(0, -1)
-shape = SubResource("RectangleShape2D_3tnhj")
-one_way_collision = true
+[node name="Left" type="RigidBody2D" parent="."]
+gravity_scale = 2.66454e-15
 
-[node name="Left" type="Sprite2D" parent="."]
+[node name="Left" type="Sprite2D" parent="Left"]
 position = Vector2(126, 317)
 texture = ExtResource("4_agwhw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
-position = Vector2(0, -0.5)
+position = Vector2(126, 316.5)
 shape = SubResource("RectangleShape2D_4wma5")
-one_way_collision = true
+
+[connection signal="body_entered" from="Right" to="Ball/Ball" method="_on_Ball_body_entered"]
+[connection signal="body_entered" from="Left" to="Ball/Ball" method="_on_Ball_body_entered"]
